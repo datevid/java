@@ -59,3 +59,88 @@ public class Adjunto{
 }
 
 ```
+
+Recibir varios archivos a la vez
+```java
+    @PostMapping("/uploads2")
+    public ResponseEntity<ResponseREST> uploads2(
+            @Valid @RequestParam("files") MultipartFile[] multipartFile,
+            BindingResult valid,
+            HttpServletRequest request, HttpServletResponse response) {
+        if (valid.hasErrors()) {
+            return super.badRequest(MGS_ERROR_FIELDS,valid);
+        }
+        try {
+            log.info("hola mundo");
+            //String originalFilename = adjuntos.getArchivo().getOriginalFilename();
+            //log.info("originalFilename: " +originalFilename);
+
+            return super.ok("Archivo recibido correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.badRequest(e.getMessage());
+        }
+        //return "Archivo recibido correctamente";
+    }
+```
+Recibir varios archivos juntos a datos adicionales como cantidad de páginas y descripción de cada archivo
+```java
+    @PostMapping("/uploads3")
+    public ResponseEntity<ResponseREST> uploads3(
+            @Valid @RequestParam("folios") Integer[] folios,
+            @Valid @RequestParam("detalles") String[] descripciones,
+            @Valid @RequestParam("files") MultipartFile[] multipartFile
+            ) {
+        try {
+            log.info("hola mundo");
+            return super.ok("Archivo recibido correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.badRequest(e.getMessage());
+        }
+    }
+```
+Recibir varios archivos juntos a datos adicionales como cantidad de páginas y descripción de cada archivo. Mapeado en un objeto
+
+```java
+    @PostMapping("/upload4")
+    public ResponseEntity<ResponseREST> upload4(
+            @Valid @ModelAttribute Request1 expedienteReq,
+            BindingResult valid,
+            HttpServletRequest request, HttpServletResponse response) {
+        if (valid.hasErrors()) {
+            return super.badRequest(MGS_ERROR_FIELDS,valid);
+        }
+        try {
+            log.info("hola mundo");
+            MultipartFile adjunto1 = expedienteReq.getAdjuntos()[0];
+            String originalFilename = adjunto1.getOriginalFilename();
+            log.info("originalFilename: " +originalFilename);
+
+            //AdjuntoCommand adjunto1 = expedienteReq.getAdjuntos()[0];
+            //String originalFilename = adjunto1.getArchivo().getOriginalFilename();
+            //log.info("originalFilename: " +originalFilename);
+            return super.ok("Archivo recibido correctamente");
+        } catch (Exception e) {
+            e.printStackTrace();
+            return super.badRequest(e.getMessage());
+        }
+    }
+```
+
+donde la clase request será de la siguiente forma:
+
+```java
+public class Request1 {
+
+    @NotNull
+    private MultipartFile principal;
+
+    private MultipartFile[] adjuntos;
+
+    private Integer[] folios;
+
+    private String[] detalles;
+}
+
+```
