@@ -44,7 +44,7 @@ recibir un string y un objeto
 El Bean puede ser de la siguiente forma:
 
 ```java
-public class AdjuntoCommand{
+public class Adjunto{
 	
 	@NotNull
 	private MultipartFile archivo;
