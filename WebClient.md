@@ -1,4 +1,4 @@
-Codigo que permite una petición a un servidor usando el body
+Codigo que permite una petición a un servidor usando el body raw
 ```java
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
