@@ -67,3 +67,52 @@ Cómo usarlo:
 ```
 
 La excepcion debe escalar hasta el controlador donde se valida y se muestra un mensaje al cliente dependiendo de qué exception se presenta
+
+Se puede crear una validación para las exceptions
+```java
+protected ResponseEntity<ResponseREST> badRequest(Exception e) {
+	ResponseREST res = new ResponseREST(e.getMessage())
+	return this.validaException(res, e);
+	}
+
+
+private ResponseEntity<ResponseREST> validaException(ResponseREST res, Exception e) {
+	if (e instanceof ServiceException) {
+		ResponseEntity<ResponseREST> resul =  ResponseEntity.status(HttpStatus.BAD_REQUEST).body(res);
+		return resul;
+	}else if (e instanceof DataAccessException) {
+		System.out.println("Error: Base de datos");
+		e.printStackTrace();
+		return this.errorServer(e);
+	} else if (e instanceof Exception500) {
+		System.out.println("Error 500:");
+		e.printStackTrace();
+		String codigoInterno = ((Exception500) e).codigoInterno;
+		if (codigoInterno != null) {
+			return this.errorServer(e,codigoInterno);
+		}else {
+			return this.errorServer(e);
+		}
+	}else if (e instanceof Exception) {
+		e.printStackTrace();
+		return this.errorServer(e);
+	}  else {
+		e.printStackTrace();
+		return this.errorServer(e);
+	}
+}
+
+
+protected ResponseEntity<ResponseREST> errorServer(Exception e) {
+	log.error("Error del servidor: "+e.toString());
+	ResponseREST res = this.error(MSG_ERR_SERVER, null);
+	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+}
+
+private ResponseEntity<ResponseREST> errorServer(Exception e, String codigoInterno) {
+	log.error("Error del servidor: "+codigoInterno);
+	log.error("Error del servidor: "+e.toString());
+	ResponseREST res = this.error(MSG_ERR_SERVER+" Cod. Interno: "+codigoInterno, null);
+	return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(res);
+}
+```
