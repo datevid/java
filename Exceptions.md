@@ -65,3 +65,5 @@ Cómo usarlo:
                         ErrorExceptionCodes.REPO_SGD_412.getCode()
                 );
 ```
+
+La excepcion debe escalar hasta el controlador donde se valida y se muestra un mensaje al cliente dependiendo de qué exception se presenta
