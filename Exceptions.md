@@ -49,7 +49,7 @@ public enum ErrorExceptionCodes {
         return message;
     }
 
-    public String getCodigoInterno() {
+    public String getCode() {
         return this.name();
     }
 
@@ -57,4 +57,11 @@ public enum ErrorExceptionCodes {
         return "Ha ocurrido un error en el servidor. " + this.name();
     }
 }
+```
+Cómo usarlo:
+```java
+	throw new Exception500(
+                        ErrorExceptionCodes.ERROR_WS_001.getMessage(),
+                        ErrorExceptionCodes.REPO_SGD_412.getCode()
+                );
 ```
