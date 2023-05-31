@@ -118,7 +118,7 @@ private ResponseEntity<ResponseREST> errorServer(Exception e, String codigoInter
 ```
 
 El controlador debe capturar la exception de la siguiente manera:
-
+Metodo 1:
 ```java
 @PostMapping(value = "/addEstudiante", produces = MediaType.APPLICATION_JSON_VALUE)
 @ApiOperation(value = "Adiciona estudiante")
@@ -132,6 +132,25 @@ public ResponseEntity<ResponseREST> addEstudiante(
 	    //add student here
 	} catch (Exception e) {
 	    return super.badRequest(e);
+	}
+}
+```
+Metodo 2:
+```java
+@PostMapping(value = "/addEstudiante", produces = MediaType.APPLICATION_JSON_VALUE)
+@ApiOperation(value = "Adiciona estudiante")
+public ResponseEntity<ResponseREST> addEstudiante(
+    @Valid @ModelAttribute Estudiante estudiante,
+    BindingResult valid) {
+	if (valid.hasErrors()) {
+	    return super.badRequest(valid);
+	}        
+	try {
+	    //add student here
+	} catch (Exception500 e) {
+	    //errores del servidor controlados capturados en esta área
+	} catch (Exception e) {
+	    //errores del servidor no controlados capturados en esta área
 	}
 }
 ```
