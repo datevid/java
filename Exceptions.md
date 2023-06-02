@@ -164,3 +164,4 @@ public class ResponseREST {
 	//getters and setters
 }
 ```
+ResponseREST debe ser usado para mostrar los resultados en el controlador
