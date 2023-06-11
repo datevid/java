@@ -1,4 +1,5 @@
-Exception para errores de servidor sería de la siguiente manera:
+Manejo de excepciones para errores de servidor status 500
+sería de la siguiente manera:
 
 ```java
 /**
