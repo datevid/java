@@ -39,12 +39,12 @@ public String restServiceSpringGeneralGet(String urlRest, int timeout) {
 }
 
 
-public CiudadanoReniecRes getCiudadanoReniec(CiudadanoReniecReq ciudadanoReniecReq) {
-    CiudadanoReniecRes response = null;
+public CiudadanoRes getDataR(CiudadanoReq ciudadanoReq) {
+    CiudadanoRes response = null;
     try {
         Gson gson = new Gson();
-        logger.info("request CiudadanoReniecReq: \n"+gson.toJson(ciudadanoReniecReq));
-        String url = applicationProperties.getReniecRestUrlCiudadano();
+        logger.info("request CiudadanoReq: \n"+gson.toJson(ciudadanoReq));
+        String url = applicationProperties.getRestUrlCiudadano();
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.getMessageConverters().add(0, new StringHttpMessageConverter(Charset.forName("UTF-8")));
         long time_start, time_end;
@@ -52,9 +52,9 @@ public CiudadanoReniecRes getCiudadanoReniec(CiudadanoReniecReq ciudadanoReniecR
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(Arrays.asList(MediaType.APPLICATION_JSON));
-        String ciudadanoReniecReqJSON = gson.toJson(ciudadanoReniecReq);
-        HttpEntity<String> entity = new HttpEntity<>(ciudadanoReniecReqJSON, headers);
-        response = restTemplate.postForObject(url, entity, CiudadanoReniecRes.class);
+        String ciudadanoReqJSON = gson.toJson(ciudadanoReq);
+        HttpEntity<String> entity = new HttpEntity<>(ciudadanoReqJSON, headers);
+        response = restTemplate.postForObject(url, entity, CiudadanoRes.class);
         //ResponseEntity<String> response = restTemplate.postForEntity( url, request , String.class );
         time_end = System.currentTimeMillis();
         double result = ((time_end - time_start) / 1000.0);
