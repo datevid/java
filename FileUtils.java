@@ -55,7 +55,7 @@ public class FileUtils {
         byte[] bytes = { 0x48, 0x65, 0x6C, 0x6C, 0x6F, 0x2C, 0x20, 0x77, 0x6F, 0x72, 0x6C, 0x64 };
 
         String nombreArchivo = "archivo.txt";
-        String ruta = "D:\\CEA";
+        String ruta = "D:\\directory";
 
         createFileFromBytes(bytes, nombreArchivo, ruta);
         eliminarArchivo(nombreArchivo, ruta);
